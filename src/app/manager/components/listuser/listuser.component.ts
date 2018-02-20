@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { Iuser } from '../../user';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
+import {CrudComponent} from '../../../shared/crud.component';
 
 /**
  * @title Data table with sorting, pagination, and filtering.
@@ -57,7 +58,7 @@ function createNewUser(id: number): UserData {
     id: id.toString(),
     name: name,
     progress: Math.round(Math.random() * 100).toString(),
-    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))]
+    color: COLORS[Math.round(Math.random() * (COLORS.length - 1))],
   };
 }
 

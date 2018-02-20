@@ -9,6 +9,7 @@ import { MaterialModule } from '../shared/materail.module';
 
 import { AdduserComponent } from './components/adduser/adduser.component';
 import { ListuserComponent } from './components/listuser/listuser.component';
+import { CrudComponent } from '../shared/crud.component';
 
 const routes: Routes = [
   {path: 'addform', component: AdduserComponent},
@@ -26,6 +27,6 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [AdduserComponent, ListuserComponent ]
+  declarations: [AdduserComponent, ListuserComponent ,CrudComponent ]
 })
 export class ManagerModule { }
