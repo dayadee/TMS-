@@ -1,0 +1,269 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+      Sign Up!
+  </div>
+
+  <div class="panel-body">
+      <form class="form-horizontal"
+            novalidate
+            (ngSubmit)="save()" [formGroup]="customerForm"
+            >
+          <fieldset>
+              <div class="form-group"
+                  [ngClass]="{'has-error': firstNameMessages }">
+                  <label class="col-md-2 control-label" 
+                         for="firstNameId">First Name</label>
+
+                  <div class="col-md-8">
+                      <input class="form-control" 
+                             id="firstNameId" 
+                             type="text" 
+                             placeholder="First Name (required)" 
+                             formControlName="firstName" />
+                      <span class="help-block" *ngIf="firstNameMessages">
+                          {{ firstNameMessages }}
+                      </span>
+                  </div>
+              </div>
+
+              <div class="form-group"
+                  [ngClass]="{'has-error': lastNameMessages }">
+                  <label class="col-md-2 control-label" 
+                      for="lastNameId">Last Name</label>
+
+                  <div class="col-md-8">
+                      <input class="form-control" 
+                             id="lastNameId" 
+                             type="text" 
+                             placeholder="Last Name (required)" 
+                             formControlName="lastName" />
+                      <span class="help-block" *ngIf="lastNameMessages">
+                         {{ lastNameMessages }}
+                      </span>
+                  </div>
+              </div>  
+          <div formGroupName="emailGroup"
+          [ngClass]="{'has-error': customerForm.get('emailGroup').errors}">
+              <div class="form-group"
+                  [ngClass]="{'has-error': emailMessage}">
+                  <label class="col-md-2 control-label" 
+                      for="lastNameId">Email</label>
+
+                  <div class="col-md-8">
+                      <input class="form-control" 
+                             id="emailId" 
+                             type="text" 
+                             placeholder="Email (required)" 
+                             formControlName="email" />
+                      <span class="help-block" *ngIf="emailMessage ">
+                              {{ emailMessage }}
+                      </span>
+                  </div>
+              </div> 
+              <div class="form-group"
+                  [ngClass]="{'has-error': ( customerForm.get('emailGroup.confirmEmail').dirty) && !customerForm.get('emailGroup.confirmEmail').valid }">
+                  <label class="col-md-2 control-label" 
+                      for="lastNameId">Confirm Email</label>
+
+                  <div class="col-md-8">
+                      <input class="form-control" 
+                             id="confirmEmailId" 
+                             type="text" 
+                             placeholder="Confirm Email (required)" 
+                             formControlName="confirmEmail" />
+                      <span class="help-block" *ngIf="(customerForm.get('emailGroup.confirmEmail').dirty) && 
+                                                      (customerForm.get('emailGroup.confirmEmail').errors ||
+                                                      customerForm.get('emailGroup').errors)">
+                          <span *ngIf="customerForm.get('emailGroup.confirmEmail').errors?.required">
+                              Please re-enter your valid email id.
+                          </span>
+                          <span *ngIf="customerForm.get('emailGroup').errors?.match">
+                              Doesn't matching given mail id
+                          </span>
+                      </span>
+                  </div>
+              </div> 
+          </div>  
+              
+              
+               
+              <div class="form-group"
+                  [ngClass]="{'has-error': !customerForm.get('phone').valid }">
+                  <label class="col-md-2 control-label" 
+                      for="phoneId">Phone</label>
+
+                  <div class="col-md-8">
+                      <input class="form-control" 
+                             id="phoneId" 
+                             type="tel" 
+                             placeholder="Phone" 
+                             formControlName="phone" />
+                             <span class="help-block" *ngIf="customerForm.get('phone').errors">
+                                  <span *ngIf="customerForm.get('phone').errors.required">
+                                      Please enter your phone Number.
+                                  </span>
+                                  <span *ngIf="customerForm.get('phone').errors.pattern">
+                                          Only Number are allowed 
+                                      </span>
+                                  <span *ngIf="customerForm.get('phone').errors.minlength">
+                                      Enter 10 digit phone number 
+                                  </span>
+                                  <span *ngIf="customerForm.get('phone').errors.maxlength">
+                                          Number should not exceed 10 digits
+                                      </span>
+                              </span>
+                  </div>
+              </div>
+            <div class="form-group">
+                  <label class="col-md-2 control-label">Send Notification</label>
+                  <div class="col-md-8">
+                      <label class="radio-inline">
+                          <input type="radio"
+                                  value="email"
+                                  formControlName="notification"
+                                 >Email
+                      </label>
+                      <label class="radio-inline">
+                              <input type="radio"
+                                      value="text"
+                                      formControlName="notification"
+                                       >Text
+                      </label>
+                  </div>
+
+              </div>
+              <div class="form-group"
+                          [ngClass]="{'has-error': ratingMessage }" >
+                      <label class="col-md-2 control-label" for="ratingId">Rating</label>
+                      <div class="col-md-8">
+                              <input class="form-control" type="number"
+                                      id="ratingId"
+                                      formControlName="rating"
+                                     />
+                              <span class="help-block" *ngIf="ratingMessage">
+                                  {{ ratingMessage }}
+                              </span>
+                              
+                      </div>
+  
+                  </div>
+
+              <div class="form-group">
+                  <div class="col-md-offset-1 col-md-8 checkbox" >
+                      <label>
+                          <input id="sendCatalogId"
+                                 type="checkbox"
+                                 formControlName = "sendCatalog" >
+                          Send me your catalog
+                      </label>
+                  </div>
+              </div>
+      
+           <div *ngIf="customerForm.get('sendCatalog').value">
+              <div formArrayName="addresses">
+                  <div fromGroupName = "0">
+                          <div class="form-group" >
+                              <label class="col-md-2 control-label">Address Type</label>
+                              <div class="col-md-8">
+                                      <label class="radio-inline">
+                                          <input type="radio" id="addressType1Id" value="home"
+                                              formControlName="addressType">Home
+                                      </label>
+                                      <label class="radio-inline">
+                                          <input type="radio" id="addressType1Id" value="work"
+                                          formControlName="addressType">Work
+                                      </label>
+                                      <label class="radio-inline">
+                                          <input type="radio" id="addressType1Id" value="other"
+                                          formControlName="addressType">Other
+                                      </label>
+                              </div>
+                          </div>
+
+                          <div class="form-group">
+                              <label class="col-md-2 control-label" 
+                                  for="street1Id">Street Address 1</label>
+                              <div class="col-md-8">
+                                  <input type="text" 
+                                      class="form-control" 
+                                      id="street1Id" placeholder="Street address"
+                                      formControlName="street1">
+                                      
+                              </div>
+                          </div>
+
+                          <div class="form-group">
+                              <label class="col-md-2 control-label" 
+                                  for="street2Id">Street Address 2</label>
+                              <div class="col-md-8">
+                                  <input type="text" 
+                                      class="form-control" 
+                                      id="street2Id"
+                                      placeholder="Street address (second line)"
+                                      formControlName="street2">
+                              </div>
+                          </div>
+
+                          <div class="form-group">
+                              <label class="col-md-2 control-label" 
+                                  for="cityId">City, State, Zip Code</label>
+                              <div class="col-md-3">
+                                  <input type="text" 
+                                      class="form-control" 
+                                      id="cityId" 
+                                      placeholder="City"
+                                      formControlName="city">
+                              </div>
+                              <div class="col-md-3">
+                                  <select class="form-control"
+                                          id="stateId"
+                                          formControlName="state">
+                                      <option value="" disabled selected hidden>Select a State...</option>
+                                      <option value="AP">Andhra Pradesh</option>
+                                      <option value="AS">Assam</option>
+                                      <option value="BR">Bihar</option>
+                                      <option value="CT">Chhattisgarh</option>
+                                      <option value="KA">Karnataka</option>
+                                      <option value="KL">Kerala</option>
+                                      <option value="MH">Maharashtra</option>
+                                      <option value="NL">Nagaland</option>
+                                  </select>
+                              </div>
+                              <div class="col-md-2">
+                              <input type="number"
+                                      class="form-control" 
+                                      id="zipId" 
+                                      placeholder="PIN Code"
+                                      formControlName="pin">
+                              </div>
+                          </div>
+                  </div>
+              </div>          
+          </div>  
+
+              <div class="form-group">
+                  <div class="col-md-4 col-md-offset-2">
+                      <span>
+                          <button class="btn btn-primary"
+                                  type="submit"
+                                  [disabled]="!customerForm.valid">
+                              Save
+                          </button>
+                      </span>
+                      <span>
+                          <button class="btn btn-success"
+                          type="button" (click)="populateTestData()">Test Data
+
+                          </button>
+                      </span>
+                  </div>
+              </div>
+
+          </fieldset>
+      </form>
+  </div>
+</div>
+<br>Dirty: {{ customerForm.dirty }} 
+<br>Touched: {{ customerForm.touched }}
+<br>Valid: {{ customerForm.valid }}
+<br>Value: {{ customerForm.value | json }}
