@@ -26,6 +26,6 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [AdduserComponent, ListuserComponent]
+  declarations: [AdduserComponent, ListuserComponent ]
 })
 export class ManagerModule { }

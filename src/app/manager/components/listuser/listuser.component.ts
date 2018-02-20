@@ -1,6 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import { Iuser } from '../../user';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 /**
  * @title Data table with sorting, pagination, and filtering.
@@ -10,8 +11,8 @@ import { Iuser } from '../../user';
   templateUrl: './listuser.component.html',
   styleUrls: ['./listuser.component.css']
 })
-export class ListuserComponent {
-  displayedColumns = ['id', 'name', 'progress', 'color'];
+export class ListuserComponent implements OnInit {
+  displayedColumns = ['id', 'name', 'progress', 'color', 'kk'];
   dataSource: MatTableDataSource<UserData>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -26,6 +27,9 @@ export class ListuserComponent {
     this.dataSource = new MatTableDataSource(users);
   }
 
+  ngOnInit(): void {
+    console.log('Onint WORKS');
+  }
   /**
    * Set the paginator and sort after the view init since this component will
    * be able to query its view for the initialized paginator and sort.
